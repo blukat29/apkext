@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tooldir=$( dirname $0 )/tools; echo $tooldir
+tooldir=$( dirname $( readlink -f $0 ) )/tools; echo $tooldir
 dname="$( dirname $1 )"; echo $dname
 extdir=$dname/$( basename $1 .apk ); echo $extdir
 
