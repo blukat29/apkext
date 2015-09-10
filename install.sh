@@ -13,7 +13,7 @@ if [ ! -d jad ]; then
   if [ "$(uname)" == "Darwin" ]; then
     wget http://varaneckas.com/jad/jad158g.mac.intel.zip -O jad.zip
   elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    wget http://varaneckas.com/jad/jad158e.linux.intel.zip -O jad.zip
+    wget http://varaneckas.com/jad/jad158e.linux.static.zip -O jad.zip
   fi
   unzip -d jad jad.zip
   rm jad.zip
