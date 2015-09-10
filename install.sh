@@ -10,7 +10,11 @@ if [ ! -d dex2jar-2.0 ]; then
 fi
 
 if [ ! -d jad ]; then
-  wget http://varaneckas.com/jad/jad158g.mac.intel.zip -O jad.zip
+  if [ "$(uname)" == "Darwin" ]; then
+    wget http://varaneckas.com/jad/jad158g.mac.intel.zip -O jad.zip
+  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    wget http://varaneckas.com/jad/jad158e.linux.intel.zip -O jad.zip
+  fi
   unzip -d jad jad.zip
   rm jad.zip
 fi
