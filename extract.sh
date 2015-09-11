@@ -2,9 +2,7 @@
 
 msg()
 {
-  echo -n "\033[1;32m"
-  echo -n $1
-  echo "\033[0;m"
+  echo "\033[1;32m$1\033[0;m"
 }
 
 tooldir=$( dirname $( readlink -f $0 ) )/tools
