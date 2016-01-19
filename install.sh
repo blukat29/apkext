@@ -9,17 +9,11 @@ if [ ! -d dex2jar-2.0 ]; then
   chmod +x dex2jar-2.0/*.sh
 fi
 
-if [ ! -d jad ]; then
-  if [ "$(uname)" == "Darwin" ]; then
-    wget http://varaneckas.com/jad/jad158g.mac.intel.zip -O jad.zip
-  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    wget http://varaneckas.com/jad/jad158e.linux.static.zip -O jad.zip
-  fi
-  unzip -d jad jad.zip
-  rm jad.zip
-fi
-
 if [ ! -f apktool.jar ]; then
   wget https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.0.1.jar -O apktool.jar
+fi
+
+if [ ! -f procyon.jar ]; then
+  wget https://bitbucket.org/mstrobel/procyon/downloads/procyon-decompiler-0.5.30.jar -O procyon.jar
 fi
 

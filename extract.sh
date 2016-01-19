@@ -27,26 +27,19 @@ msg "[+] Extracting under $extdir"
 msg "[+] Extracting resources"
 java -jar $tooldir/apktool.jar d $1 -o $extdir/unpacked
 
-msg "[+] Extracting apk archive"
-mkdir -p $extdir
-rm -rf $extdir/raw
-mkdir -p $extdir/raw
-unzip -d $extdir/raw $1
+msg "[+] Extracting classes.dex"
+unzip $1 classes.dex -d $extdir/
 
 msg "[+] Converting classes.dex to jar"
-$tooldir/dex2jar-2.0/d2j-dex2jar.sh $extdir/raw/classes.dex -o $extdir/classes.jar
+$tooldir/dex2jar-2.0/d2j-dex2jar.sh $extdir/classes.dex -o $extdir/classes.jar
+rm $extdir/classes.dex
 
-msg "[+] Extracting jar file"
-rm -rf $extdir/cls
-mkdir -p $extdir/cls
-unzip -d $extdir/cls $extdir/classes.jar
-
-msg "[+] Decompiling class files"
+msg "[+] Decompiling jar files"
 rm -rf $extdir/src
 mkdir -p $extdir/src
-$tooldir/jad/jad -r -d $extdir/src -s java $extdir/cls/**/*.class
+java -jar $tooldir/procyon.jar -jar $extdir/classes.jar -o $extdir/src
 
 msg ""
-msg "[+] Resources are in $extdir/unpacked"
+msg "[+] Resources and smali are in $extdir/unpacked"
 msg "[+] Decompiled classes in $extdir/src"
 
