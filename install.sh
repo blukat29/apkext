@@ -11,6 +11,7 @@ fi
 
 if [ ! -f apktool.jar ]; then
   wget https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.0.1.jar -O apktool.jar
+  unzip apktool.jar prebuilt/aapt/*
 fi
 
 if [ ! -f procyon.jar ]; then

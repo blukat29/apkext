@@ -27,7 +27,11 @@ One-click tool for extracting apk files.
 ```
 
 ```
-./extract.sh <apk file>
+./extract.sh App.apk
+```
+
+```
+./build.sh App/unpacked/ New.apk
 ```
 
 Note: apk file name must end with `.apk`
@@ -43,3 +47,10 @@ Example/
     unpacked/     - unpacked resources, libraries, smali codes.
 ```
 
+### Troubleshoot
+
+If you are running it under x64 os and have error with `build.sh`, try:
+
+```
+apt-get install lib32z1 lib32stdc++6
+```
