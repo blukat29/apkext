@@ -25,7 +25,7 @@ fi
 msg "[+] Extracting under $extdir"
 
 msg "[+] Extracting resources"
-java -jar $tooldir/apktool.jar d $1 -o $extdir/unpacked
+java -jar $tooldir/apktool.jar d $1 --frame-path $tooldir/framework -o $extdir/unpacked
 
 msg "[+] Extracting classes.dex"
 unzip $1 classes.dex -d $extdir/
