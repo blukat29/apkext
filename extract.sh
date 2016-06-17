@@ -13,33 +13,37 @@ if [ $# -lt 1 ]; then
   exit
 fi
 
-dname="$( dirname $1 )";
-extdir=$dname/$( basename $1 .apk )
+dname="$( dirname "$1" )";
+extdir="$dname/$( basename "$1" .apk )"
 
-if [ -d $extdir ]; then
-  echo "Directory $extdir already exists."
+if [ -d "$extdir" ]; then
+  echo "Directory '$extdir' already exists."
   echo "Remove or rename it and then retry."
   exit
 fi
 
-msg "[+] Extracting under $extdir"
+msg "[+] Extracting under '$extdir'"
 
 msg "[+] Extracting resources"
-java -jar $tooldir/apktool.jar d $1 --frame-path $tooldir/framework -o $extdir/unpacked
+java -jar "$tooldir/apktool.jar" d "$1" --frame-path "$tooldir/framework" -o "$extdir/unpacked"
 
 msg "[+] Extracting classes.dex"
-unzip $1 classes.dex -d $extdir/
+unzip "$1" classes.dex -d "$extdir/"
+if [ "$?" -ne "0" ]; then
+  unzip "$1" class.dex -d "$extdir/"
+  mv "$extdir/class.dex" "$extdir/classes.dex"
+fi
 
 msg "[+] Converting classes.dex to jar"
-$tooldir/dex2jar-2.0/d2j-dex2jar.sh $extdir/classes.dex -o $extdir/classes.jar
-rm $extdir/classes.dex
+"$tooldir/dex2jar-2.0/d2j-dex2jar.sh" "$extdir/classes.dex" -o "$extdir/classes.jar"
+rm "$extdir/classes.dex"
 
 msg "[+] Decompiling jar files"
-rm -rf $extdir/src
-mkdir -p $extdir/src
-java -jar $tooldir/procyon.jar -jar $extdir/classes.jar -o $extdir/src
+rm -rf "$extdir/src"
+mkdir -p "$extdir/src"
+java -jar "$tooldir/procyon.jar" -jar "$extdir/classes.jar" -o "$extdir/src"
 
 msg ""
-msg "[+] Resources and smali are in $extdir/unpacked"
-msg "[+] Decompiled classes in $extdir/src"
+msg "[+] Resources and smali are in '$extdir/unpacked'"
+msg "[+] Decompiled classes in '$extdir/src'"
 
